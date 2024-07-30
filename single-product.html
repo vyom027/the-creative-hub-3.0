@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,6 +11,48 @@
 
     <title>Hexashop - Product Detail Page</title>
 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main-image img {
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            max-height: 450px; /* Adjusted max height for main image */
+            object-fit: cover; /* Ensures the image covers the div while maintaining aspect ratio */
+        }
+
+        .main-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .sub-images img {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100px; /* Set a consistent width */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .sub-images img:hover {
+            transform: scale(1.1);
+        }
+
+        .product-details h1 {
+            font-weight: bold;
+        }
+
+        .product-details p {
+            font-size: 1.1rem;
+        }
+
+        .btn-custom {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        .sub-images-wrapper {
+            justify-content: space-between;
+            gap: 0.5rem; /* Add gap between sub-images */
+        }
+    </style>
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
@@ -22,17 +64,17 @@
     <link rel="stylesheet" href="assets/css/owl-carousel.css">
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
-<!--
+    <!--
 
-TemplateMo 571 Hexashop
+    TemplateMo 571 Hexashop
 
-https://templatemo.com/tm-571-hexashop
+    https://templatemo.com/tm-571-hexashop
 
--->
-    </head>
-    
-    <body>
-    
+    -->
+</head>
+
+<body>
+
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
@@ -40,12 +82,12 @@ https://templatemo.com/tm-571-hexashop
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>
     <!-- ***** Preloader End ***** -->
-    
-    
+
+
     <!-- ***** Header Area Start ***** -->
-       <header class="header-area header-sticky">
+    <header class="header-area header-sticky">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -70,7 +112,7 @@ https://templatemo.com/tm-571-hexashop
                             <li class="scroll-to-section"><a href="contact.html">Contact Us</a></li>
                             <li class="scroll-to-section"><a href="about.html">Explore</a></li>
                             <li class="scroll-to-section"><a href="login.html">Login/ SignUp</a></li>
-                        </ul>        
+                        </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
@@ -84,67 +126,40 @@ https://templatemo.com/tm-571-hexashop
     <!-- ***** Header Area End ***** -->
 
     <!-- ***** Main Banner Area Start ***** -->
-    <div class="page-heading" id="top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="inner-content">
-                        <h2>Single Product Page</h2>
-                        <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
+
+    <div class="container my-5">
+        <div class="row gy-4" style="margin-top: 120px;">
+            <!-- Main Image and Sub Images -->
+            <div class="col-lg-6">
+                <div class="main-image mb-4">
+                    <img src="./assets/images/main-ac.png" class="img-fluid w-100" alt="Main Product Image">
+                </div>
+                <div class="sub-images d-flex flex-wrap sub-images-wrapper">
+                    <img src="./assets/images/main-ac.png" class="img-thumbnail" alt="Sub Image 1">
+                    <img src="./assets/images/main-battery.png" class="img-thumbnail" alt="Sub Image 2">
+                    <img src="./assets/images/main-charge.png" class="img-thumbnail" alt="Sub Image 3">
+                    <img src="./assets/images/main-cooler.png" class="img-thumbnail" alt="Sub Image 4">
+                </div>
+            </div>
+            <!-- Product Details -->
+            <div class="col-lg-6">
+                <div class="product-details">
+                    <h1>Product Title</h1>
+                    <p class="text-muted">Category: Example Category</p>
+                    <h4 class="text-success">$99.99</h4>
+                    <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae orci nec arcu feugiat pharetra. Phasellus eu velit sit amet lacus efficitur scelerisque.</p>
+                    <div class="mt-4">
+                        <button type="button" class="btn btn-primary btn-custom me-2">Add to Cart</button>
+                        <button type="button" class="btn btn-success btn-custom">Buy Now</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ***** Main Banner Area End ***** -->
 
 
-    <!-- ***** Product Area Starts ***** -->
-    <section class="section" id="product">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                <div class="left-images">
-                    <img src="assets/images/single-product-01.jpg" alt="">
-                    <img src="assets/images/single-product-02.jpg" alt="">
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="right-content">
-                    <h4>New Green Jacket</h4>
-                    <span class="price">$75.00</span>
-                    <ul class="stars">
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod kon tempor incididunt ut labore.</span>
-                    <div class="quote">
-                        <i class="fa fa-quote-left"></i><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiuski smod.</p>
-                    </div>
-                    <div class="quantity-content">
-                        <div class="left-content">
-                            <h6>No. of Orders</h6>
-                        </div>
-                        <div class="right-content">
-                            <div class="quantity buttons_added">
-                                <input type="button" value="-" class="minus"><input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""><input type="button" value="+" class="plus">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="total">
-                        <h4>Total: $210.00</h4>
-                        <div class="main-border-button"><a href="#">Add To Cart</a></div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </section>
     <!-- ***** Product Area Ends ***** -->
-    
+
     <!-- ***** Footer Start ***** -->
     <footer>
         <div class="container">
@@ -189,11 +204,11 @@ https://templatemo.com/tm-571-hexashop
                 </div>
                 <div class="col-lg-12">
                     <div class="under-footer">
-                        <p>Copyright © 2022 HexaShop Co., Ltd. All Rights Reserved. 
-                        
-                        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
+                        <p>Copyright © 2022 HexaShop Co., Ltd. All Rights Reserved.
 
-                        <br>Distributed By: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ThemeWagon</a></p>
+                            <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
+
+                            <br>Distributed By: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ThemeWagon</a></p>
                         <ul>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -205,7 +220,7 @@ https://templatemo.com/tm-571-hexashop
             </div>
         </div>
     </footer>
-    
+
 
     <!-- jQuery -->
     <script src="assets/js/jquery-2.1.0.min.js"></script>
@@ -213,6 +228,7 @@ https://templatemo.com/tm-571-hexashop
     <!-- Bootstrap -->
     <script src="assets/js/popper.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugins -->
     <script src="assets/js/owl-carousel.js"></script>
@@ -221,33 +237,30 @@ https://templatemo.com/tm-571-hexashop
     <script src="assets/js/scrollreveal.min.js"></script>
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/jquery.counterup.min.js"></script>
-    <script src="assets/js/imgfix.min.js"></script> 
-    <script src="assets/js/slick.js"></script> 
-    <script src="assets/js/lightbox.js"></script> 
-    <script src="assets/js/isotope.js"></script> 
+    <script src="assets/js/imgfix.min.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/lightbox.js"></script>
+    <script src="assets/js/isotope.js"></script>
     <script src="assets/js/quantity.js"></script>
-    
+
     <!-- Global Init -->
     <script src="assets/js/custom.js"></script>
 
     <script>
-
         $(function() {
             var selectedClass = "";
-            $("p").click(function(){
-            selectedClass = $(this).attr("data-rel");
-            $("#portfolio").fadeTo(50, 0.1);
-                $("#portfolio div").not("."+selectedClass).fadeOut();
-            setTimeout(function() {
-              $("."+selectedClass).fadeIn();
-              $("#portfolio").fadeTo(50, 1);
-            }, 500);
-                
+            $("p").click(function() {
+                selectedClass = $(this).attr("data-rel");
+                $("#portfolio").fadeTo(50, 0.1);
+                $("#portfolio div").not("." + selectedClass).fadeOut();
+                setTimeout(function() {
+                    $("." + selectedClass).fadeIn();
+                    $("#portfolio").fadeTo(50, 1);
+                }, 500);
             });
         });
-
     </script>
 
-  </body>
+</body>
 
 </html>
