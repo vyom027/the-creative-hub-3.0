@@ -13,11 +13,23 @@
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            font-size: 0.9rem; /* Slightly smaller font size */
+        }
+
+        .container {
+            max-width: 1100px; /* Smaller max-width for the entire container */
+        }
+
+        .header-area {
+            padding: 15px 0; /* Slightly reduced padding */
+        }
+
         .main-image img {
             border-radius: 10px;
             transition: transform 0.3s ease;
-            max-height: 450px; /* Adjusted max height for main image */
-            object-fit: cover; /* Ensures the image covers the div while maintaining aspect ratio */
+            max-height: 400px; /* Reduced max height for main image */
+            object-fit: cover;
         }
 
         .main-image img:hover {
@@ -27,8 +39,8 @@
         .sub-images img {
             cursor: pointer;
             transition: transform 0.3s ease;
-            width: 100px; /* Set a consistent width */
-            height: auto; /* Maintain aspect ratio */
+            width: 90px; /* Reduced width for sub images */
+            height: auto;
         }
 
         .sub-images img:hover {
@@ -37,32 +49,32 @@
 
         .product-details h1 {
             font-weight: bold;
+            font-size: 1.8rem; /* Slightly smaller heading */
         }
 
         .product-details p {
-            font-size: 1.1rem;
+            font-size: 1rem; /* Slightly smaller paragraph text */
         }
 
         .btn-custom {
-            padding: 10px 20px;
-            font-size: 1rem;
+            padding: 8px 16px; /* Reduced padding for buttons */
+            font-size: 0.9rem; /* Slightly smaller button text */
         }
 
         .sub-images-wrapper {
             justify-content: space-between;
-            gap: 0.5rem; /* Add gap between sub-images */
+            gap: 0.5rem;
+        }
+        .pro-con{
+            border:1px solid black;
         }
     </style>
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
-
     <link rel="stylesheet" href="assets/css/templatemo-hexashop.css">
-
     <link rel="stylesheet" href="assets/css/owl-carousel.css">
-
     <link rel="stylesheet" href="assets/css/lightbox.css">
     <!--
 
@@ -94,7 +106,7 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="index.html" class="logo">
-                            <img src="assets/images/logo.png" height="90px">
+                            <img src="assets/images/logo.png" height="80px"> <!-- Reduced logo height -->
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
@@ -127,27 +139,27 @@
 
     <!-- ***** Main Banner Area Start ***** -->
 
-    <div class="container my-5">
+    <div class="container my-5 pro-con">
         <div class="row gy-4" style="margin-top: 120px;">
             <!-- Main Image and Sub Images -->
             <div class="col-lg-6">
                 <div class="main-image mb-4">
-                    <img src="./assets/images/main-ac.png" class="img-fluid w-100" alt="Main Product Image">
+                    <img src="" class="img-fluid w-100 main-img" alt="Main Product Image">
                 </div>
                 <div class="sub-images d-flex flex-wrap sub-images-wrapper">
-                    <img src="./assets/images/main-ac.png" class="img-thumbnail" alt="Sub Image 1">
-                    <img src="./assets/images/main-battery.png" class="img-thumbnail" alt="Sub Image 2">
-                    <img src="./assets/images/main-charge.png" class="img-thumbnail" alt="Sub Image 3">
-                    <img src="./assets/images/main-cooler.png" class="img-thumbnail" alt="Sub Image 4">
+                    <img src="" class="img-thumbnail img1" alt="Sub Image 1">
+                    <img src="" class="img-thumbnail img2" alt="Sub Image 2">
+                    <img src="" class="img-thumbnail img3" alt="Sub Image 3">
+                    <img src="" class="img-thumbnail img4" alt="Sub Image 4">
                 </div>
             </div>
             <!-- Product Details -->
             <div class="col-lg-6">
                 <div class="product-details">
-                    <h1>Product Title</h1>
-                    <p class="text-muted">Category: Example Category</p>
-                    <h4 class="text-success">$99.99</h4>
-                    <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae orci nec arcu feugiat pharetra. Phasellus eu velit sit amet lacus efficitur scelerisque.</p>
+                    <h1 class="name"></h1>
+                    <p class="text-muted category"></p>
+                    <h4 class="text-success price"></h4>
+                    <p class="mt-4 details"></p>
                     <div class="mt-4">
                         <button type="button" class="btn btn-primary btn-custom me-2">Add to Cart</button>
                         <button type="button" class="btn btn-success btn-custom">Buy Now</button>
@@ -247,13 +259,13 @@
     <script src="assets/js/custom.js"></script>
 
     <script>
-        $(function() {
+        $(function () {
             var selectedClass = "";
-            $("p").click(function() {
+            $("p").click(function () {
                 selectedClass = $(this).attr("data-rel");
                 $("#portfolio").fadeTo(50, 0.1);
                 $("#portfolio div").not("." + selectedClass).fadeOut();
-                setTimeout(function() {
+                setTimeout(function () {
                     $("." + selectedClass).fadeIn();
                     $("#portfolio").fadeTo(50, 1);
                 }, 500);
