@@ -146,3 +146,18 @@ function mobile5(event) {
     document.getElementById('price').innerHTML = '₹ 1,10,000';
     document.getElementById('pro-details').innerHTML = '<ul><li>12 GB RAM | 256 GB ROM</li><li>17.02 cm (6.7 inch) Full HD+ Display</li><li>50MP + 12MP | 10MP Front Camera</li><li>4000 mAh Lithium ion Battery</li><li>Snapdragon 8 Gen 3 Processor</li></ul>';
 }
+
+function mobile6(event) {
+    event.preventDefault();
+    document.getElementById('pro-con').style.display = 'block';
+    document.documentElement.classList.add("no-scroll");
+    document.getElementById('main-img').src = './products/mobile-computer/x13p.png';
+    document.getElementById('img1').src = './products/mobile-computer/x13p.png';
+    document.getElementById('img2').src = './products/mobile-computer/x13p-2.png';
+    document.getElementById('img3').src = './products/mobile-computer/x13p-3.png';
+    document.getElementById('img4').src = './products/mobile-computer/x13p-4.png';
+    document.getElementById('name').innerHTML = 'Xiaomi 13 Pro';
+    document.getElementById('category').innerHTML = 'Mobile Phone';
+    document.getElementById('price').innerHTML = '₹ 86,000';
+    document.getElementById('pro-details').innerHTML = '<ul><li">8 GB RAM | 128 GB ROM</li><li">16.94 cm (6.67 inch) Display</li><li">200MP (OIS) + 8MP + 2MP | 16MP Front Camera</li><li">5100 mAh Battery</li><li">7s Gen 2 Mobile Platform 5G Processor</li></ul>';
+}
