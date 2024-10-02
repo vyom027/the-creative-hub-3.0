@@ -406,12 +406,12 @@ mysqli_close($conn);
                   </div>
                 </div>
                   
-                <form method="POST">
-                  <div class="col-lg-12 col-sm-6 col-12">
+                  <div class="col-lg-3 col-sm-3 col-12">
                       <div class="form-group">
                           <label>Category</label>
+                <form method="POST">
                           <select class="select"  name="category" onchange="this.form.submit()">
-                              <option value="0">Choose Category</option>
+                              <option value="1">Choose Category</option>
                               <option value="1" <?php echo isset($selected_category) && $selected_category == '1' ? 'selected' : ''; ?>>Pending</option>
                               <option value="2" <?php echo isset($selected_category) && $selected_category == '2' ? 'selected' : ''; ?>>Completed</option>
                           </select>

@@ -1,11 +1,23 @@
 <?php
-   require_once 'db_connection.php';
+require_once 'db_connection.php';
 
-   $sql = "SELECT * FROM product";
-   $all_product = $conn->query($sql);
+// Fetch categories
+$category_query = "SELECT * FROM category";
+$all_category = $conn->query($category_query);
 
+$category_id = 1; // Initialize category_id variable
+$all_product = null;
+// Check if a category is selected from POST request
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
+      $category_id = intval($_POST['category']);
+  }
+
+  // Fetch products based on selected category
+  if ($category_id) {
+      $sql = "SELECT * FROM product WHERE category_id = $category_id";
+      $all_product = $conn->query($sql);
+  }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -302,12 +314,28 @@
                       /></span>
                     </a>
                   </div>
+                  
                   <div class="search-input">
                     <a class="btn btn-searchset"
                       ><img src="assets/img/icons/search-white.svg" alt="img"
                     /></a>
                   </div>
                 </div>
+                <div class="col-lg-3 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label>Category</label>
+                      <form method="post">
+                      <select class="select" name="category" onchange="this.form.submit()">
+                        <option value="1">Choose Category</option>
+                        <?php while ($row = mysqli_fetch_assoc($all_category)): ?>
+                          <option value="<?php echo $row['category_id']; ?>" <?php if (isset($category_id) && $category_id == $row['category_id']) echo 'selected'; ?>>
+                            <?php echo $row['category_name']; ?>
+                          </option>
+                        <?php endwhile; ?>
+                      </select>
+                      </form>
+                    </div>
+                  </div>
                 <div class="wordset">
                   <ul>
                     <li>
@@ -337,7 +365,7 @@
                   </ul>
                 </div>
               </div>
-
+              
               <div class="card mb-0" id="filter_inputs">
                 <div class="card-body pb-0">
                   <div class="row">
@@ -399,7 +427,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <div class="table-responsive">
                 <table class="table datanew">
                   <thead>

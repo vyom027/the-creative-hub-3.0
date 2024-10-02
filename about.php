@@ -56,9 +56,9 @@
                                 <a href="javascript:;">Products</a>
                                 <ul>
                                     <li><a href="">Mobile & Computers</a></li>
-                                    <li><a href="">Home Appliances</a></li>
-                                    <li><a href="">Entertainment Devices</a></li>
-                                    <li><a href="">Accessories</a></li>
+                                    <li><a href="home-appliances.php">Home Appliances</a></li>
+                                    <li><a href="entertainment-devices.php">Entertainment Devices</a></li>
+                                    <li><a href="accessories.php">Accessories</a></li>
                                 </ul>
                             </li>
                             <li class="scroll-to-section"><a href="contact.php">Contact Us</a></li>

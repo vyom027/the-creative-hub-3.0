@@ -1,7 +1,7 @@
 <?php
    require_once 'db_connection.php';
    include_once './php/cart.php';
-    $category_id = 1;
+    $category_id = 4;
     $sub_category_id = 1;
     $sub_category = "SELECT * FROM sub_category where category_id = $category_id";
     $sub_category_result = mysqli_query($conn, $sub_category);
@@ -241,7 +241,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h2>Our Latest Mobile & Computing Devices</h2>
+                        <h2>Our Latest Accessories</h2>
                         <!-- <span>Check out all of our Mobile & Computing Devices</span> -->
                     </div>
                 </div>

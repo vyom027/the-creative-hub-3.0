@@ -184,9 +184,9 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                 <a href="javascript:;">Products</a>
                                 <ul>
                                     <li><a href="mobile-computer.php">Mobile & Computers</a></li>
-                                    <li><a href="">Home Appliances</a></li>
-                                    <li><a href="">Entertainment Devices</a></li>
-                                    <li><a href="">Accessories</a></li>
+                                    <li><a href="home-appliances.php">Home Appliances</a></li>
+                                    <li><a href="entertainment-devices.php">Entertainment Devices</a></li>
+                                    <li><a href="accessories.php">Accessories</a></li>
                                 </ul>
                             </li>
                             <li class="scroll-to-section"><a href="contact.php">Contact Us</a></li>
@@ -267,7 +267,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                                 <h4>Home Appliances</h4>
                                                 <p>Refrigerators, washing machines, ACs, microwaves, dishwashers, vacuum cleaners, water purifiers, and air purifiers enhance home comfort and convenience.</p>
                                                 <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
+                                                    <a href="home-appliances.php">Discover More</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -287,7 +287,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                                 <h4>Entertainment Devices</h4>
                                                 <p> Televisions, projectors, speakers, soundbars, gaming consoles, streaming devices, and VR headsets enhance home entertainment experiences.</p>
                                                 <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
+                                                    <a href="entertainment-devices.php">Discover More</a>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,18 +1,32 @@
 <?php
-   require_once 'db_connection.php';
+require_once 'db_connection.php';
 
-   $category = "SELECT * FROM category";
-   $sub_category = "SELECT * FROM sub_category";
-   $all_category = $conn->query($category);
-   $all_sub_category = $conn->query($sub_category);
+// Fetch categories for the dropdown
+$category_query = "SELECT * FROM category";
+$all_category = $conn->query($category_query);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Initialize variables
+$all_sub_category = null;
+
+// Check if a category is selected and subcategories should be displayed
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
+    $category_id = intval($_POST['category']);
+
+    if ($category_id != 0) {
+        // Fetch subcategories based on the selected category
+        $sub_category_query = "SELECT * FROM sub_category WHERE category_id = $category_id";
+        $all_sub_category = $conn->query($sub_category_query);
+    }
+}
+
+// If form is submitted for product data
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_name'])) {
     $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $category = mysqli_real_escape_string($conn, $_POST['category']);
     $sub_category = mysqli_real_escape_string($conn, $_POST['sub_category']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
     $price = mysqli_real_escape_string($conn, $_POST['price']);
-    
+
     // Handle file uploads
     $main_image = uploadImage('main_image');
     $sub_image1 = uploadImage('sub_image1');
@@ -20,42 +34,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sub_image3 = uploadImage('sub_image3');
     $sub_image4 = uploadImage('sub_image4');
 
-    if($product_name != NULL && $category != NULL && $sub_category != NULL && $description !=NULL && $price != NULL && $main_image != NULL && $sub_image1 != NULL && $sub_image2 != NULL && $sub_image3 != NULL && $sub_image4 != NULL){
-    // Insert data into the database
-    $query = "INSERT INTO product (name, category_id,sub_category_id, description, price, image_url, sub_image1, sub_image2, sub_image3, sub_image4) 
-              VALUES ('$product_name', '$category','$sub_category', '$description', '$price', '$main_image', '$sub_image1', '$sub_image2', '$sub_image3', '$sub_image4')";
+    if ($product_name && $category && $sub_category && $description && $price && $main_image && $sub_image1 && $sub_image2 && $sub_image3 && $sub_image4) {
+        // Insert data into the database
+        $query = "INSERT INTO product (name, category_id, sub_category_id, description, price, image_url, sub_image1, sub_image2, sub_image3, sub_image4) 
+                  VALUES ('$product_name', '$category', '$sub_category', '$description', '$price', '$main_image', '$sub_image1', '$sub_image2', '$sub_image3', '$sub_image4')";
 
-    if (mysqli_query($conn, $query)) {
-      header("Location: productlist.php");
-    } else {
-        echo "Error: " . mysqli_error($conn);
+        if (mysqli_query($conn, $query)) {
+            header("Location: productlist.php");
+        } else {
+            echo "Error: " . mysqli_error($conn);
+        }
     }
-  }
-  else{
-    
-  }
-    // Close database connection
-    mysqli_close($conn);
 }
 
-// Function to handle image upload
+// Image upload function
 function uploadImage($imageField) {
     if (isset($_FILES[$imageField]) && $_FILES[$imageField]['error'] == 0) {
         $uploadDir = 'uploads/';
         $uploadFile = $uploadDir . basename($_FILES[$imageField]['name']);
-        
-        if (move_uploaded_file($_FILES[$imageField]['tmp_name'],$uploadFile)) {
+
+        if (move_uploaded_file($_FILES[$imageField]['tmp_name'], $uploadFile)) {
             return $uploadFile;
-        } else {
-            echo "Error uploading file: " . $_FILES[$imageField]['name'];
         }
     }
     return null;
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -125,36 +129,33 @@ function uploadImage($imageField) {
                   </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12">
-                  <div class="form-group">
-                    <label>Category</label>
-                    <select class="select" name="category">
-                      <option value="0">Choose Category</option>
-                      <?php
-                        while($row = mysqli_fetch_assoc($all_category)){
-                      ?>
-                      <option value="<?php echo $row["category_id"]?>"><?php echo $row["category_name"]?></option>
-                      <?php
-                        }
-                      ?>
-                    </select>
+                    <div class="form-group">
+                      <label>Category</label>
+                      <select class="select" name="category" onchange="this.form.submit()">
+                        <option value="0">Choose Category</option>
+                        <?php while ($row = mysqli_fetch_assoc($all_category)): ?>
+                          <option value="<?php echo $row['category_id']; ?>" <?php if (isset($category_id) && $category_id == $row['category_id']) echo 'selected'; ?>>
+                            <?php echo $row['category_name']; ?>
+                          </option>
+                        <?php endwhile; ?>
+                      </select>
+                    </div>
                   </div>
-                </div>
 
-                <div class="col-lg-3 col-sm-6 col-12">
-                  <div class="form-group">
-                    <label>Sub-Category</label>
-                    <select class="select" name="sub_category">
-                      <option value="0">Choose Sub-Category</option>
-                      <?php
-                        while($row = mysqli_fetch_assoc($all_sub_category)){
-                      ?>
-                      <option value="<?php echo $row["sub_category_id"]?>"><?php echo $row["sub_category_name"]?></option>
-                      <?php
-                        }
-                      ?>
-                    </select>
+                  <!-- Subcategory Dropdown (only shown if category is selected) -->
+                  <div class="col-lg-3 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label>Sub-Category</label>
+                      <select class="select" name="sub_category">
+                        <option value="0">Choose Sub-Category</option>
+                        <?php if ($all_sub_category): ?>
+                          <?php while ($row = mysqli_fetch_assoc($all_sub_category)): ?>
+                            <option value="<?php echo $row['sub_category_id']; ?>"><?php echo $row['sub_category_name']; ?></option>
+                          <?php endwhile; ?>
+                        <?php endif; ?>
+                      </select>
+                    </div>
                   </div>
-                </div>
                 
                 <div class="col-lg-12">
                   <div class="form-group">
@@ -259,5 +260,24 @@ function uploadImage($imageField) {
     <script src="assets/plugins/sweetalert/sweetalerts.min.js"></script>
 
     <script src="assets/js/script.js"></script>
+    <script>
+  $(document).ready(function() {
+    $('#category').on('change', function() {
+      var categoryId = $(this).val();
+      $('#sub_category').html('<option value="0">Choose Sub-Category</option>'); // Reset subcategories
+
+      if (categoryId != 0) {
+        $.ajax({
+          url: 'get_sub_categories.php', // File that returns subcategories
+          method: 'POST',
+          data: { category_id: categoryId },
+          success: function(response) {
+            $('#sub_category').append(response); // Populate the subcategory dropdown
+          }
+        });
+      }
+    });
+  });
+</script>
   </body>
 </html>

@@ -1,30 +1,54 @@
-<?php
-   require_once 'db_connection.php';
-   include_once './php/cart.php';
-    $category_id = 1;
-    $sub_category_id = 1;
-    $sub_category = "SELECT * FROM sub_category where category_id = $category_id";
-    $sub_category_result = mysqli_query($conn, $sub_category);
 
+<?php
+include_once './php/cart.php';
+$all_product = NULL;
+$sub_category_id = null;
+
+if (isset($_GET['product_id'], $_GET['category_id'], $_GET['sub_category_id'])) {
+    $product_id = intval($_GET['product_id']);
+    $category_id = intval($_GET['category_id']);
+    $sub_category_id = intval($_GET['sub_category_id']);
+}
+
+$hide_section = false;
+
+// Check if the form is submitted and a sub_category_id is set
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sub_category_id'])) {
+    $sub_category_id = intval($_POST['sub_category_id']); // Get the selected subcategory ID
+    $hide_section = true; // Hide the section after submission
+}
+
+// Fetch subcategories
+$sub_category_query = "SELECT * FROM sub_category WHERE category_id = $category_id";
+$sub_category_result = mysqli_query($conn, $sub_category_query);
+
+// Fetch products based on the selected subcategory
+if ($sub_category_id !== null) {
+    $product_detail_query = "SELECT * FROM product WHERE sub_category_id = $sub_category_id AND category_id = $category_id";
+    $all_product = $conn->query($product_detail_query);
+
+    if (!$all_product) {
+        die('Query Failed: ' . mysqli_error($conn));
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-
-    <meta charset="utf-8">
+<head>
+<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
-      rel="stylesheet"
-    />
-    <title> Mobile & Computing Devices | The Creative Hub</title>
+
+    <title> Mobiles </title>
 
     <style>
+        <?php if ($hide_section): ?>
+        #pro-con {
+            display: none;
+        }
+        <?php endif; ?>
         .nav button {
             background :none;
             position: relative;
@@ -57,7 +81,6 @@
     <!-- Additional CSS Files -->
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/product.css">
-    <!-- <link rel="stylesheet" href="./assets/css/select.css"> -->
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
 
     <link rel="stylesheet" href="assets/css/templatemo-hexashop.css">
@@ -65,11 +88,10 @@
     <link rel="stylesheet" href="assets/css/owl-carousel.css">
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
+</head>
+<body>
+    
 
-    </head>
-    
-    <body>
-    
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
@@ -99,15 +121,15 @@ $sql_cart = "SELECT shopping_cart.*, product.name, product.image_url
 $result_cart = mysqli_query($conn, $sql_cart);
 ?>
     <div class="cart-con" id="cart-con" style="background-color: white;
-  position: absolute;
-  width: 100%; 
-  top: 100px; 
-  padding: 20px;
-  overflow-y: auto; 
-  z-index: 1000; 
-  display: none; 
-  min-height: 90vh;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                                                position: absolute;
+                                                width: 100%; 
+                                                top: 100px; 
+                                                padding: 20px;
+                                                overflow-y: auto; 
+                                                z-index: 1000; 
+                                                display: none; 
+                                                min-height: 90vh;
+                                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12">
@@ -151,7 +173,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                     <?php endif; ?>
 
                                     <div class="pt-5">
-                                        <h6 class="mb-0"><a onclick="closeCart()" class="text-body"><i class="fa fa-arrow"></i>Back to shop</a></h6>
+                                        <h6 class="mb-0"><a onclick="closeCart()" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
                                     </div>
                                 </div>
                             </div>
@@ -232,16 +254,71 @@ $result_cart = mysqli_query($conn, $sql_cart);
             </div>
         </div>
     </header>
-
     <!-- ***** Header Area End ***** -->
-    
+    <div class="container my-5 pro-con" id="pro-con" <?php if ($hide_section) echo 'style="display:none;"'; ?>>
+        <!-- New Close Button -->
+        <?php
+            // Include your database connection
+            include('db_connection.php');
+
+            // Fetch product ID from the URL
+            $product_id = $_GET['product_id'];
+
+            // Query the database to get the product details
+            $query = "SELECT * FROM product 
+            WHERE product.product_id = " . $product_id;
+  
+            $result = mysqli_query($conn, $query);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                $product = mysqli_fetch_assoc($result);
+            } else {
+                echo "Product not found!";
+                exit;
+            }
+        ?>
+
+        <div class="row gy-4">
+            <!-- Main Image and Sub Images -->
+            <div class="col-lg-6">
+                <div class="main-image mb-4">
+                    <img src="./admin/<?php echo $product["image_url"]?>" class="img-fluid w-100" id="main-img" alt="Main Product Image">
+                </div>
+                <div class="sub-images d-flex flex-wrap sub-images-wrapper">
+                    <img src="./admin/<?php echo $product["sub_image1"]?>" class="img-thumbnail img1" onclick="Imgchange('img1')" id="img1" alt="Sub Image 1">
+                    <img src="./admin/<?php echo $product["sub_image2"]?>" class="img-thumbnail img2" onclick="Imgchange('img2')" id="img2" alt="Sub Image 2">
+                    <img src="./admin/<?php echo $product["sub_image3"]?>" class="img-thumbnail img3" onclick="Imgchange('img3')" id="img3" alt="Sub Image 3">
+                    <img src="./admin/<?php echo $product["sub_image4"]?>" class="img-thumbnail img4" onclick="Imgchange('img4')" id="img4" alt="Sub Image 4">
+                </div>
+            </div>
+            <!-- Product Details -->
+            <div class="col-lg-6">
+                <div class="product-details"><br><br>
+                    <h1 class="name" id="name"><?php echo $product["name"]?></h1><br>
+                    <h4 class="text-success" id="price"><?php echo $product["price"]?></h4>
+                    <p class="mt-4" id="pro-details"><?php echo $product["description"]?></p>
+                    <div class="mt-4">
+                    <form method="post" >
+                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                    <input type="hidden" name="product_price" value="<?php echo $product['price']; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
+                    <input type="hidden" name="main_image" value="<?php echo $product['image_url']; ?>">  <!-- Main Image -->
+                    <button type="submit" class="btn btn-primary btn-custom me-2" name="add_to_cart">Add to Cart</button>
+                    <button type="submit" class="btn btn-success btn-custom" name="buy_now">Buy Now</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="close-btn" onclick="closeProduct()">&times;</button>
+
+    </div>
     <!-- ***** Products Area Starts ***** -->
     <section class="section" id="products" style="margin-top: 30px ;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h2>Our Latest Mobile & Computing Devices</h2>
+                        <!-- <h2>Our Latest Mobile & Computing Devices</h2> -->
                         <!-- <span>Check out all of our Mobile & Computing Devices</span> -->
                     </div>
                 </div>
@@ -253,41 +330,31 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                 justify-content:center;
                                 align-items: center;
                                 color :black;
-                                margin: -30px auto 20px;
+                                margin: 10px auto 20px;
                                 z-index:10;">
-            <?php if ($sub_category_result && mysqli_num_rows($sub_category_result) > 0) : ?>
+                <?php if ($sub_category_result && mysqli_num_rows($sub_category_result) > 0): ?>
                 <form method="post">
-                    <?php while ($row = mysqli_fetch_assoc($sub_category_result)) : ?>
-                        <!-- Directly pass sub_category_id as the value of the button -->
+                    <?php while ($row = mysqli_fetch_assoc($sub_category_result)): ?>
                         <button type="submit" name="sub_category_id" value="<?php echo $row['sub_category_id']; ?>">
                             <?php echo htmlspecialchars($row['sub_category_name']); ?>
                         </button>
                     <?php endwhile; ?>
                 </form>
-            <?php else : ?>
-                <a href="#">No Subcategories</a> <!-- Fallback if no subcategories are found -->
+            <?php else: ?>
+                <a href="#">No Subcategories</a>
             <?php endif; ?>
 
             </form>
         </div>
-        <?php
-
-            if ($_SERVER['REQUEST_METHOD'] == 'POST' ) {
-                $sub_category_id = intval($_POST['sub_category_id']);
-            }
-            $sql_product = "SELECT * FROM product WHERE sub_category_id = $sub_category_id AND category_id = $category_id";
-            $all_product = $conn->query($sql_product);
-        ?>
         <div class="container">
-            <div class="row">
+        <div class="row">
             <?php
                 while($row = mysqli_fetch_assoc($all_product)){
             ?>
                 <div class="col-lg-4">
                     <div class="item">
                         <div class="thumb">
-                            <!-- <a href="product.php?product_id=<?php echo $row['product_id']; ?> -->
-                            <a href="product.php?product_id=<?php echo $row['product_id']; ?>&category_id=<?php echo $category_id; ?>&sub_category_id=<?php echo $sub_category_id; ?>">
+                        <a href="product.php?product_id=<?php echo $row['product_id']; ?>&category_id=<?php echo $category_id; ?>&sub_category_id=<?php echo $sub_category_id; ?>">
                             <img src="./admin/<?php echo $row["image_url"]?>" alt=""></a>
                         </div>
                         <div class="down-content">
@@ -388,9 +455,8 @@ $result_cart = mysqli_query($conn, $sql_cart);
         </div>
     </footer>
     
-
     <!-- jQuery -->
-    <script src="assets/js/jquery-2.1.0.min.js"></script>
+    <script src="assets/js/jquery-2.1.0.min.js"></scr>
 
     <!-- Bootstrap -->
     <script src="assets/js/popper.js"></script>
@@ -408,7 +474,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
     <script src="assets/js/slick.js"></script> 
     <script src="assets/js/lightbox.js"></script> 
     <script src="assets/js/isotope.js"></script> 
-    <!-- <script src="mobile.js"></script> -->
+    // <script src="assets/js/mobile.js"></script>
     <!-- Global Init -->
     <script src="assets/js/custom.js"></script>
 
@@ -427,20 +493,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                 
             });
         });
-
-    </script>
-
-<script>
-function cart() {
-  // Show the cart section
-  document.getElementById("cart-con").style.display = "block";
-}
-
-function closeCart() {
-  // Hide the cart section
-  document.getElementById("cart-con").style.display = "none";
-}
     </script>
   </body>
-
 </html>
+        

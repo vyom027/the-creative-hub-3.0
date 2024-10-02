@@ -309,7 +309,7 @@
                 <div class="col-lg-4 col-sm-6 col-12">
                   <div class="form-group">
                     <label>Category</label>
-                    <select class="select" name="category_name">
+                    <select class="select" name="category_name"  onchange="this.form.submit()">
                       <option value="0">Choose Category</option>
                       <?php
                         while($row = mysqli_fetch_assoc($all_category)){
@@ -319,7 +319,7 @@
                         }
                       ?>
                   </select>
-                  <button type="submit" class="btn btn-primary btn-custom me-2">Go</button>
+                  <!-- <button type="submit" class="btn btn-primary btn-custom me-2">Go</button> -->
 
                 </div>
               </div>
