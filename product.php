@@ -234,8 +234,8 @@ $result_cart = mysqli_query($conn, $sql_cart);
                             </li>
                             <li class="scroll-to-section"><a href="contact.php">Contact Us</a></li>
                             <li class="scroll-to-section"><a href="about.php">Explore</a></li>
-                            <li class="scroll-to-section" onclick="cart()"><a>Shopping Cart</a></li>
                             <?php if (isset($_SESSION['username'])): ?>
+                                <li class="scroll-to-section" onclick="cart()"><a>Shopping Cart</a></li>
                                 <li class="submenu"><a href=""><?php echo $_SESSION['username'] ?></a>
                                     <ul>
                                         <li><a href="logout.php">Log out</a></li>

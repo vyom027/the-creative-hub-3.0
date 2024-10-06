@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2024 at 04:41 PM
+-- Generation Time: Oct 06, 2024 at 11:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -100,7 +100,8 @@ CREATE TABLE `confirm_orders` (
 INSERT INTO `confirm_orders` (`order_id`, `user_id`, `product_id`, `price`, `main_image`, `order_date`) VALUES
 (1, 3, 2, 154900.00, '', '2024-09-29 08:47:58'),
 (2, 3, 3, 177900.00, 'uploads/sfold6.png', '2024-09-29 08:51:39'),
-(3, 3, 5, 121900.00, 'uploads/sf6.png', '2024-09-29 09:22:57');
+(3, 3, 5, 121900.00, 'uploads/sf6.png', '2024-09-29 09:22:57'),
+(4, 3, 1, 174900.00, 'uploads/i15p.png', '2024-10-02 06:14:42');
 
 -- --------------------------------------------------------
 
@@ -174,10 +175,10 @@ INSERT INTO `pending_orders` (`order_id`, `user_id`, `product_id`, `price`, `ord
 (7, 3, 3, 177900.00, '2024-09-29 05:16:08', 'pending', 'uploads/sfold6.png'),
 (9, 3, 2, 154900.00, '2024-09-29 05:38:29', 'pending', 'uploads/s24u.png'),
 (10, 3, 3, 177900.00, '2024-09-29 05:38:57', 'pending', 'uploads/sfold6.png'),
-(11, 3, 1, 174900.00, '2024-09-29 05:41:01', 'pending', 'uploads/i15p.png'),
 (12, 3, 2, 154900.00, '2024-09-29 05:42:00', 'pending', 'uploads/s24u.png'),
 (13, 3, 2, 154900.00, '2024-09-29 06:37:39', 'pending', 'uploads/s24u.png'),
-(14, 3, 2, 154900.00, '2024-09-29 06:38:01', 'pending', 'uploads/s24u.png');
+(14, 3, 2, 154900.00, '2024-09-29 06:38:01', 'pending', 'uploads/s24u.png'),
+(15, 3, 2, 154900.00, '2024-10-01 13:06:56', 'pending', 'uploads/s24u.png');
 
 -- --------------------------------------------------------
 
@@ -244,7 +245,18 @@ CREATE TABLE `sub_category` (
 INSERT INTO `sub_category` (`sub_category_id`, `sub_category_name`, `category_id`, `sub_category_code`) VALUES
 (1, 'Mobile', 1, 'MO024'),
 (2, 'Computers', 1, 'CO024'),
-(3, 'TV', 2, 'TV027');
+(3, 'MicroWave Owen', 2, 'MW024'),
+(4, 'Refrigerators', 2, 'RF024'),
+(5, 'Air Conditioners', 2, 'AC024'),
+(6, 'Washing Machines', 2, 'WM024'),
+(7, 'Televisions', 3, 'TV024'),
+(8, 'Projectors', 3, 'PJ024'),
+(9, 'Speakers', 3, 'SP024'),
+(10, 'Head Phones', 3, 'HP024'),
+(11, 'Wireless Chargers ', 4, 'WC024'),
+(12, 'Mouse', 4, 'MS024'),
+(13, 'Power Bank', 4, 'PB024'),
+(14, 'Laptop Cooler', 4, 'LC024');
 
 -- --------------------------------------------------------
 
@@ -385,7 +397,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `confirm_orders`
 --
 ALTER TABLE `confirm_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -397,13 +409,13 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `order_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `order_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `pending_orders`
 --
 ALTER TABLE `pending_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -415,13 +427,13 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `shopping_cart`
 --
 ALTER TABLE `shopping_cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user_data`

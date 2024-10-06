@@ -61,11 +61,7 @@ if (isset($_POST['clear_cart'])) {
     <!-- ***** Preloader End ***** -->
     
     <?php
-// Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+
 
 // Get the logged-in user's ID
 $user_id = $_SESSION['user_id'];
@@ -79,15 +75,15 @@ $sql_cart = "SELECT shopping_cart.*, product.name, product.image_url
 $result_cart = mysqli_query($conn, $sql_cart);
 ?>
     <div class="cart-con" id="cart-con" style="background-color: white;
-  position: absolute;
-  width: 100%; 
-  top: 100px; 
-  padding: 20px;
-  overflow-y: auto; 
-  z-index: 1000; 
-  display: none; 
-  min-height: 90vh;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                                                position: absolute;
+                                                width: 100%; 
+                                                top: 100px; 
+                                                padding: 20px;
+                                                overflow-y: auto; 
+                                                z-index: 1000; 
+                                                display: none; 
+                                                min-height: 90vh;
+                                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12">
@@ -119,7 +115,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                                     <h6 class="mb-0">₹<?php echo $cart_item['price']; ?></h6>
                                                 </div>
                                                 <div class="col-md-3 col-lg-2 col-xl-2 text-end">
-                                                                                                    <button type="submit" class="text-muted" name="delete_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Delete</button>    
+                                                <button type="submit" class="text-muted" name="delete_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Delete</button>    
 
                                                 </div>
                                             </div>
@@ -191,8 +187,8 @@ $result_cart = mysqli_query($conn, $sql_cart);
                             </li>
                             <li class="scroll-to-section"><a href="contact.php">Contact Us</a></li>
                             <li class="scroll-to-section"><a href="about.php">Explore</a></li>
-                            <li class="scroll-to-section" onclick="cart()"><a>Shopping Cart</a></li>
                             <?php if (isset($_SESSION['username'])): ?>
+                                <li class="scroll-to-section" onclick="cart()"><a>Shopping Cart</a></li>
                                 <li class="submenu"><a href=""><?php echo $_SESSION['username'] ?></a>
                                     <ul>
                                         <li><a href="logout.php">Log out</a></li>
