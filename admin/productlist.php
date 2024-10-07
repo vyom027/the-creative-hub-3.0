@@ -1,5 +1,6 @@
 <?php
 require_once 'db_connection.php';
+require_once 'admin-check.php';
 
 // Fetch categories
 $category_query = "SELECT * FROM category";
@@ -7,6 +8,8 @@ $all_category = $conn->query($category_query);
 
 $category_id = 1; // Initialize category_id variable
 $all_product = null;
+$hide_section = false;
+
 // Check if a category is selected from POST request
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
       $category_id = intval($_POST['category']);
@@ -26,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
+    <link rel="stylesheet" href="../assets/css/product.css">
+
     <meta name="description" content="POS - Bootstrap Admin Template" />
     <meta
       name="keywords"
@@ -103,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
                     <span class="status online"></span
                   ></span>
                   <div class="profilesets">
-                    <h6>Vivek </h6>
+                    <h6><?php echo $_SESSION['admin_username'] ?></h6>
                     <h5>Admin</h5>
                   </div>
                 </div>
@@ -115,13 +120,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
                   ><i class="me-2" data-feather="settings"></i>Settings</a
                 >
                 <hr class="m-0" />
-                <a class="dropdown-item logout pb-0" href="signin.html"
+                <form method="POST">
+                <button class="dropdown-item logout pb-0" name="log_out" href=""
                   ><img
                     src="assets/img/icons/log-out.svg"
                     class="me-2"
                     alt="img"
-                  />Logout</a
-                >
+                  />Logout</button 
+                ></form>
               </div>
             </div>
           </li>
@@ -283,7 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
           </div>
         </div>
       </div>
-
+  
       <div class="page-wrapper">
         <div class="content">
           <div class="page-header">
@@ -463,14 +469,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
                       <td><?php echo $row["price"]?></td>
                       <td>Admin</td>
                       <td>
-                        <a class="me-3" href="productlist.php">
+                        <a class="me-3" href="productlist.php?product_id=<?php echo $row["product_id"] ?>">
                           <img src="assets/img/icons/eye.svg" alt="img" />
                         </a>
-                        <a class="me-3" href="editproduct.html">
+                        <a class="me-3" href="editproduct.php?product_id=<?php echo $row["product_id"] ?>">
                           <img src="assets/img/icons/edit.svg" alt="img" />
                         </a>
-                        <a class="confirm-text" href="javascript:void(0);">
-                          <img src="assets/img/icons/delete.svg" alt="img" />
+                        <a class="me-3" href="delete_product.php?product_id=<?php echo $row["product_id"] ?>">
+                          <img src="assets/img/icons/delete.svg" alt="Delete Product" />
                         </a>
                       </td>
                     </tr>
@@ -486,6 +492,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
       </div>
     </div>
 
+    <div class="container my-5 pro-con" id="pro-con" <?php if ($hide_section) echo 'style="display:none;"'; ?> style="margin-left:300px;">
+        <!-- New Close Button -->
+        <?php
+        
+        $hide_section = true;
+      
+            $product_id = $_GET['product_id'];
+
+            // Query the database to get the product details
+            $query = "SELECT * FROM product 
+            WHERE product.product_id = " . $product_id;
+  
+            $result = mysqli_query($conn, $query);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                $product = mysqli_fetch_assoc($result);
+            } else {
+                echo "Product not found!";
+                exit;
+            }
+        ?>
+
+        <div class="row gy-4">
+            <!-- Main Image and Sub Images -->
+            <div class="col-lg-6">
+                <div class="main-image mb-4">
+                    <img src="<?php echo $product["image_url"]?>" class="img-fluid w-100" id="main-img" alt="Main Product Image">
+                </div>
+                <div class="sub-images d-flex flex-wrap sub-images-wrapper">
+                    <img src="<?php echo $product["sub_image1"]?>" class="img-thumbnail img1" onclick="Imgchange('img1')" id="img1" alt="Sub Image 1">
+                    <img src="<?php echo $product["sub_image2"]?>" class="img-thumbnail img2" onclick="Imgchange('img2')" id="img2" alt="Sub Image 2">
+                    <img src="<?php echo $product["sub_image3"]?>" class="img-thumbnail img3" onclick="Imgchange('img3')" id="img3" alt="Sub Image 3">
+                    <img src="<?php echo $product["sub_image4"]?>" class="img-thumbnail img4" onclick="Imgchange('img4')" id="img4" alt="Sub Image 4">
+                </div>
+            </div>
+            <!-- Product Details -->
+            <div class="col-lg-6">
+                <div class="product-details"><br><br>
+                    <h1 class="name" id="name"><?php echo $product["name"]?></h1><br>
+                    <h4 class="text-success" id="price"><?php echo $product["price"]?></h4>
+                    <p class="mt-4" id="pro-details"><?php echo $product["description"]?></p>
+                </div>
+            </div>
+        </div>
+        <button class="close-btn" onclick="closeProduct()">&times;</button>
+
+    </div>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
 
     <script src="assets/js/feather.min.js"></script>
@@ -502,6 +555,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
     <script src="assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
     <script src="assets/plugins/sweetalert/sweetalerts.min.js"></script>
 
+    <script>
+      function closeProduct() {
+  document.getElementById("pro-con").style.display = "none";
+}
+
+function Imgchange(Id) {
+  let Imgsrc = document.getElementById(Id).src;
+  document.getElementById("main-img").src = Imgsrc;
+  return false;
+}
+    </script>
     <script src="assets/js/script.js"></script>
   </body>
 </html>

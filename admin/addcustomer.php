@@ -1,5 +1,6 @@
 <?php
 require_once 'db_connection.php';
+require_once 'admin-check.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -134,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <span class="status online"></span
                   ></span>
                   <div class="profilesets">
-                    <h6>Vivek </h6>
+                    <h6><?php echo $_SESSION['admin_username'] ?></h6>
                     <h5>Admin</h5>
                   </div>
                 </div>
@@ -146,13 +147,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   ><i class="me-2" data-feather="settings"></i>Settings</a
                 >
                 <hr class="m-0" />
-                <a class="dropdown-item logout pb-0" href="signin.html"
+                <form method="POST">
+                <button class="dropdown-item logout pb-0" name="log_out" href=""
                   ><img
                     src="assets/img/icons/log-out.svg"
                     class="me-2"
                     alt="img"
-                  />Logout</a
-                >
+                  />Logout</button 
+                ></form>
               </div>
             </div>
           </li>

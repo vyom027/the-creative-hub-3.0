@@ -1,15 +1,16 @@
 <?php
 require_once 'db_connection.php';
+require_once 'admin-check.php';
 
 // Fetch categories for the dropdown
 $category_query = "SELECT * FROM category";
 $all_category = $conn->query($category_query);
-
+$alert_message = null;
 // Initialize variables
 $all_sub_category = null;
 
 // Check if a category is selected and subcategories should be displayed
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
+if ( isset($_POST['category'])) {
     $category_id = intval($_POST['category']);
 
     if ($category_id != 0) {
@@ -44,7 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_name'])) {
         } else {
             echo "Error: " . mysqli_error($conn);
         }
-    }
+      } else {
+          $alert_message = 'Please fill in all required fields before submitting.';
+      }
 }
 
 // Image upload function
@@ -118,7 +121,12 @@ function uploadImage($imageField) {
               <h6>Create new product</h6>
             </div>
           </div>
-
+          <?php if ($alert_message): ?>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Warning!</strong> <?php echo $alert_message; ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <?php endif; ?>
           <div class="card">
             <div class="card-body">
               <div class="row">
@@ -132,7 +140,7 @@ function uploadImage($imageField) {
                     <div class="form-group">
                       <label>Category</label>
                       <select class="select" name="category" onchange="this.form.submit()">
-                        <option value="0">Choose Category</option>
+                        <option value="null">Choose Category</option>
                         <?php while ($row = mysqli_fetch_assoc($all_category)): ?>
                           <option value="<?php echo $row['category_id']; ?>" <?php if (isset($category_id) && $category_id == $row['category_id']) echo 'selected'; ?>>
                             <?php echo $row['category_name']; ?>
@@ -147,7 +155,7 @@ function uploadImage($imageField) {
                     <div class="form-group">
                       <label>Sub-Category</label>
                       <select class="select" name="sub_category">
-                        <option value="0">Choose Sub-Category</option>
+                        <option value="null">Choose Sub-Category</option>
                         <?php if ($all_sub_category): ?>
                           <?php while ($row = mysqli_fetch_assoc($all_sub_category)): ?>
                             <option value="<?php echo $row['sub_category_id']; ?>"><?php echo $row['sub_category_name']; ?></option>

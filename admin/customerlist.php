@@ -1,6 +1,7 @@
 ﻿<?php
 require_once 'db_connection.php';
-session_start();
+// session_start();
+require_once 'admin-check.php';
 
 // Query to get all customer details (modify the query if you want to show only specific customers)
 $customer_query = "SELECT * FROM customer";
@@ -105,7 +106,7 @@ mysqli_close($conn);
                     <span class="status online"></span
                   ></span>
                   <div class="profilesets">
-                    <h6>Vivek </h6>
+                    <h6><?php echo $_SESSION['admin_username'] ?></h6>
                     <h5>Admin</h5>
                   </div>
                 </div>
@@ -117,13 +118,14 @@ mysqli_close($conn);
                   ><i class="me-2" data-feather="settings"></i>Settings</a
                 >
                 <hr class="m-0" />
-                <a class="dropdown-item logout pb-0" href="signin.html"
+                <form method="POST">
+                <button class="dropdown-item logout pb-0" name="log_out" href=""
                   ><img
                     src="assets/img/icons/log-out.svg"
                     class="me-2"
                     alt="img"
-                  />Logout</a
-                >
+                  />Logout</button 
+                ></form>
               </div>
             </div>
           </li>
