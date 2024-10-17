@@ -41,7 +41,7 @@ if ($sub_category_id !== null) {
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title> Mobiles </title>
+    <title> Product </title>
 
     <style>
         <?php if ($hide_section): ?>
@@ -104,10 +104,6 @@ if ($sub_category_id !== null) {
     
     <?php
 // Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
 
 // Get the logged-in user's ID
 $user_id = $_SESSION['user_id'];
@@ -301,7 +297,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                     <form method="post" >
                     <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                     <input type="hidden" name="product_price" value="<?php echo $product['price']; ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
+                    <!-- <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>"> -->
                     <input type="hidden" name="main_image" value="<?php echo $product['image_url']; ?>">  <!-- Main Image -->
                     <button type="submit" class="btn btn-primary btn-custom me-2" name="add_to_cart">Add to Cart</button>
                     <button type="submit" class="btn btn-success btn-custom" name="buy_now">Buy Now</button></form>
@@ -340,12 +336,42 @@ $result_cart = mysqli_query($conn, $sql_cart);
                         </button>
                     <?php endwhile; ?>
                 </form>
-            <?php else: ?>
-                <a href="#">No Subcategories</a>
-            <?php endif; ?>
+            <?php endif;?>
 
-            </form>
-        </div>
+            <div class="col-md-4 d-flex justify-content-end">
+                <form class="d-flex" method="post">
+                <input class="form-control me-2" type="search" id="searchInput" name="search_query" placeholder="Search products..." aria-label="Search" onkeyup="this.form.submit()">
+                <button class="btn " type="submit">Search</button>
+                </form>
+            </div>
+       </div>
+        
+
+       <div id="searchResults" class="container">
+    <?php
+    if (isset($_POST['search_query'])) {
+        $search_query = mysqli_real_escape_string($conn, $_POST['search_query']);
+        
+        // Modify this query to match your product table structure
+        $sql = "SELECT * FROM product WHERE name LIKE '%$search_query%' OR description LIKE '%$search_query%'";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            // Display the search results
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="product">';
+                echo '<h4>' . $row['name'] . '</h4>';
+                echo '<p>' . $row['description'] . '</p>';
+                echo '<span>' . $row['price'] . '</span>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No products found</p>';
+        }
+    }
+    ?>
+</div>
+        
         <div class="container">
         <div class="row">
             <?php
@@ -355,7 +381,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                     <div class="item">
                         <div class="thumb">
                         <a href="product.php?product_id=<?php echo $row['product_id']; ?>&category_id=<?php echo $category_id; ?>&sub_category_id=<?php echo $sub_category_id; ?>">
-                            <img src="./admin/<?php echo $row["image_url"]?>" alt=""></a>
+                            <img src="./admin/<?php echo $row["image_url"]?>" height="400px" width="400px" alt=""></a>
                         </div>
                         <div class="down-content">
                             <h4><?php echo $row["name"]?></h4>
@@ -496,4 +522,3 @@ $result_cart = mysqli_query($conn, $sql_cart);
     </script>
   </body>
 </html>
-        

@@ -492,13 +492,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
       </div>
     </div>
 
-    <div class="container my-5 pro-con" id="pro-con" <?php if ($hide_section) echo 'style="display:none;"'; ?> style="margin-left:300px;">
+    <div class="container my-5 pro-con" id="pro-con" <?php if (!$hide_section) echo 'style="display:none;"'; ?> style="margin-left:300px;">
         <!-- New Close Button -->
         <?php
         
-        $hide_section = true;
       
+            if(isset($_GET['product_id'])){
             $product_id = $_GET['product_id'];
+                    $hide_section = true;
 
             // Query the database to get the product details
             $query = "SELECT * FROM product 
@@ -512,9 +513,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category'])) {
                 echo "Product not found!";
                 exit;
             }
+            }
         ?>
 
-        <div class="row gy-4">
+        <div class="row gy-4" <?php if (!$hide_section) echo 'style="display:none;"'; ?>>
             <!-- Main Image and Sub Images -->
             <div class="col-lg-6">
                 <div class="main-image mb-4">
