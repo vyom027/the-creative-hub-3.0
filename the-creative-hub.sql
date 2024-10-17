@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2024 at 11:02 AM
+-- Generation Time: Oct 17, 2024 at 04:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -100,8 +100,9 @@ CREATE TABLE `confirm_orders` (
 INSERT INTO `confirm_orders` (`order_id`, `user_id`, `product_id`, `price`, `main_image`, `order_date`) VALUES
 (1, 3, 2, 154900.00, '', '2024-09-29 08:47:58'),
 (2, 3, 3, 177900.00, 'uploads/sfold6.png', '2024-09-29 08:51:39'),
-(3, 3, 5, 121900.00, 'uploads/sf6.png', '2024-09-29 09:22:57'),
-(4, 3, 1, 174900.00, 'uploads/i15p.png', '2024-10-02 06:14:42');
+(4, 3, 1, 174900.00, 'uploads/i15p.png', '2024-10-02 06:14:42'),
+(5, 3, 1, 174900.00, 'uploads/i15p.png', '2024-10-17 14:04:39'),
+(6, 3, 4, 94000.00, 'uploads/x14ultra.png', '2024-10-17 14:05:30');
 
 -- --------------------------------------------------------
 
@@ -169,8 +170,6 @@ CREATE TABLE `pending_orders` (
 --
 
 INSERT INTO `pending_orders` (`order_id`, `user_id`, `product_id`, `price`, `order_date`, `status`, `main_image`) VALUES
-(2, 3, 1, 174900.00, '2024-09-29 04:33:13', 'pending', 'uploads/i15p.png'),
-(4, 3, 4, 94000.00, '2024-09-29 04:44:46', 'pending', 'uploads/x14ultra.png'),
 (6, 3, 2, 154900.00, '2024-09-29 05:16:08', 'pending', 'uploads/s24u.png'),
 (7, 3, 3, 177900.00, '2024-09-29 05:16:08', 'pending', 'uploads/sfold6.png'),
 (9, 3, 2, 154900.00, '2024-09-29 05:38:29', 'pending', 'uploads/s24u.png'),
@@ -178,7 +177,8 @@ INSERT INTO `pending_orders` (`order_id`, `user_id`, `product_id`, `price`, `ord
 (12, 3, 2, 154900.00, '2024-09-29 05:42:00', 'pending', 'uploads/s24u.png'),
 (13, 3, 2, 154900.00, '2024-09-29 06:37:39', 'pending', 'uploads/s24u.png'),
 (14, 3, 2, 154900.00, '2024-09-29 06:38:01', 'pending', 'uploads/s24u.png'),
-(15, 3, 2, 154900.00, '2024-10-01 13:06:56', 'pending', 'uploads/s24u.png');
+(15, 3, 2, 154900.00, '2024-10-01 13:06:56', 'pending', 'uploads/s24u.png'),
+(16, 3, 9, 389990.00, '2024-10-17 13:52:25', 'pending', 'uploads/msit.png');
 
 -- --------------------------------------------------------
 
@@ -207,9 +207,13 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `image_url`, `sub_image1`, `sub_image2`, `sub_image3`, `sub_image4`, `category_id`, `sub_category_id`) VALUES
 (1, 'Iphone 15 Pro Max', '1 TB ROM\r\n17.02 cm (6.7 inch) Super Retina XDR Display\r\n48MP + 12MP + 12MP | 12MP Front Camera\r\nA17 Pro Chip, 6 Core Processor Processor', 174900.00, 'uploads/i15p.png', 'uploads/i15p.png', 'uploads/i15p-2.png', 'uploads/i15p-3.png', 'uploads/i15p-4.png', 1, '1'),
 (2, 'Samsung s24 Ultra', '12 GB RAM | 512 GB ROM\r\n17.27 cm (6.8 inch) Quad HD+ Display\r\n200MP + 50MP + 12MP + 10MP | 12MP Front Camera\r\n5000 mAh Battery\r\nSnapdragon 8 Gen 3 Processor', 154900.00, 'uploads/s24u.png', 'uploads/s24u.png', 'uploads/s24u-2.png', 'uploads/s24u-3.png', 'uploads/s24u-4.png', 1, '1'),
-(3, 'Samsung Fold 6', '12 GB RAM | 512 GB ROM\r\n19.3 cm (7.6 inch) QXGA+ Display\r\n50MP + 12MP + 10MP | 10MP Front Camera\r\n4400 mAh Lithium ion Battery\r\nSnapdragon 8 Gen 3 Processor', 177900.00, 'uploads/sfold6.png', 'uploads/sfold6.png', 'uploads/sfold6-2.png', 'uploads/sfold6-3.png', 'uploads/sfold6-4.png', 1, '1'),
+(3, 'Samsung Fold 6', '12 GB RAM | 512 GB ROM\r\n19.3 cm (7.6 inch) QXGA+ Display\r\n50MP + 12MP + 10MP | 10MP Front Camera\r\n4400 mAh Lithium ion Battery\r\nSnapdragon 8 Gen 3 Processor', 177900.00, 'uploads/sfold6.png', 'uploads/sfold6.png', 'uploads/sfold6-2.png', 'uploads/sfold6-3.png', 'uploads/sfold6-4.png', 1, '0'),
 (4, 'Xiaomi 14 Pro', '16 GB RAM | 512 GB ROM\r\n17.09 cm (6.73 inch) Display\r\n50MP + 50MP + 50MP + 50MP | 32MP Front Camera\r\n5000 mAh Battery\r\nSnapdragon 8 Gen 3 Mobile Platform Processor', 94000.00, 'uploads/x14ultra.png', 'uploads/x14ultra.png', 'uploads/x14-2.png', 'uploads/x14-3.png', 'uploads/x14-4.png', 1, '1'),
-(5, 'Samsung Flip 6', '\r\n12 GB RAM | 512 GB ROM\r\n17.02 cm (6.7 inch) Full HD+ Display\r\n50MP + 12MP | 10MP Front Camera\r\n4000 mAh Lithium ion Battery\r\nSnapdragon 8 Gen 3 Processor', 121900.00, 'uploads/sf6.png', 'uploads/sf6.png', 'uploads/sf6-1.png', 'uploads/sf6-2.png', 'uploads/sf6-3.png', 1, '1');
+(5, 'Samsung Flip 6', '12 GB RAM | 512 GB ROM\r\n17.02 cm (6.7 inch) Full HD+ Display\r\n50MP + 12MP | 10MP Front Camera\r\n4000 mAh Lithium ion Battery\r\nSnapdragon 8 Gen 3 Processor', 121999.00, 'uploads/sf6.png', 'uploads/sf6.png', 'uploads/sf6-1.png', 'uploads/sf6-2.png', 'uploads/sf6-3.png', 1, '1'),
+(6, 'Samusung Fold 6', '12 GB RAM | 512 GB ROM\r\n19.3 cm (7.6 inch) QXGA+ Display\r\n50MP + 12MP + 10MP | 10MP Front Camera\r\n4400 mAh Lithium ion Battery\r\nSnapdragon 8 Gen 3 Processor', 176999.00, 'uploads/sfold6.png', 'uploads/sfold6.png', 'uploads/sfold6-2.png', 'uploads/sfold6-3.png', 'uploads/sfold6-4.png', 1, '1'),
+(7, 'ASUS Zenbook Duo', '14 Inch Full HD, OLED 16:10 aspect ratio, 0.2ms response time, 60Hz refresh rate, 400nits, 500nits HDR peak brightness, 100% DCI-P3 color gamut, 1,000,000:1, VESA CERTIFIED Display HDR True Black 500, 1.07 billion colors, PANTONE Validated, Glossy display, 70% less harmful blue light\r\nLight Laptop without Optical Disk Drive', 239990.00, 'uploads/asus-rog.png', 'uploads/asus-rog.png', 'uploads/a16-2.png', 'uploads/a16-3.png', 'uploads/a16-4.png', 1, '2'),
+(8, 'Apple MacBook Air M3', 'Stylish & Portable Thin and Light Laptop\r\n13 Inch Liquid Retina display, LED-backlit Display with IPS Technology, Native Resolution at 224 pixels per inch, 500 nits Brightness\r\nLight Laptop without Optical Disk Drive', 145490.00, 'uploads/m15-1.png', 'uploads/m15-1.png', 'uploads/m15-2.png', 'uploads/m15-3.png', 'uploads/m15-4.png', 1, '2'),
+(9, 'MSI Titan 18HX', '8 Inch UHD+ MiniLED, 120Hz, 100% DCI-P3 (Typ.), IPS-Level panel\r\nLight Laptop without Optical Disk Drive', 389990.00, 'uploads/msit.png', 'uploads/msit.png', 'uploads/msit-2.png', 'uploads/msit-3.png', 'uploads/msit-4.png', 1, '2');
 
 -- --------------------------------------------------------
 
@@ -397,7 +401,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `confirm_orders`
 --
 ALTER TABLE `confirm_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -409,25 +413,25 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `order_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `order_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `pending_orders`
 --
 ALTER TABLE `pending_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `shopping_cart`
 --
 ALTER TABLE `shopping_cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `sub_category`
