@@ -329,7 +329,11 @@ $result_cart = mysqli_query($conn, $sql_cart);
     <footer>
         <div class="container">
             <div class="row">
+<<<<<<< HEAD
                                 <div class="col-lg-4">
+=======
+                <div class="col-lg-4">
+>>>>>>> 712d2eebd89c16d136fb6698bedd69671e174e94
                     <div class="first-item">
                         <div class="logo">
                             <img src="assets/images/bottom.png" height="50px" alt="The Creative Hub ecommerce templatemo">
@@ -347,21 +351,31 @@ $result_cart = mysqli_query($conn, $sql_cart);
                 <div class="col-lg-4">
                     <h4>Shopping &amp; Categories</h4>
                     <ul>
-                        <li><a href="#">Mobile and Computing Devices</a></li>
-                        <li><a href="#">Home Appliances</a></li>
-                        <li><a href="#">Entertainment Devices</a></li>
-                        <li><a href="#">All Accessories</a></li>
+                        <li><a href="mobile-computer.php">Mobile and Computing Devices</a></li>
+                        <li><a href="home-appliances.php">Home Appliances</a></li>
+                        <li><a href="entertainment-devices.php">Entertainment Devices</a></li>
+                        <li><a href="accessories.php">All Accessories</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
                     <h4>Useful Links</h4>
                     <ul>
+<<<<<<< HEAD
                         <li><a href="#">Homepage</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Help</a></li>
                         <li><a href="#">Contact Us</a></li>
                     </ul>
                 </div>
+=======
+                        <li><a href="index.php">Homepage</a></li>
+                        <li><a href="about.php">About Us</a></li>
+                        <li><a href="help.php">Help</a></li>
+                        <li><a href="contact.php">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+>>>>>>> 712d2eebd89c16d136fb6698bedd69671e174e94
                 <div class="col-lg-12">
                     <div class="under-footer">
                         <p>Copyright © 2024 The Creative Hub Ltd. All Rights Reserved. </p>
