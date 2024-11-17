@@ -2,6 +2,11 @@
 
 include_once "db_connection.php";
 session_start();
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 if (isset($_POST['login'])) {
     // Sanitize the input to avoid SQL injection
     $username = $_POST['username'];
@@ -12,9 +17,7 @@ if (isset($_POST['login'])) {
     $admin = mysqli_query($conn, $query);
 
     if (!$admin) {
-        // Display SQL error if the query fails
         echo "SQL Error: " . mysqli_error($conn);
-        exit(); // Stop script execution if there's an error
     }
 
     if (mysqli_num_rows($admin) != 0) {
@@ -24,14 +27,12 @@ if (isset($_POST['login'])) {
       $_SESSION['admin_username'] =  $admin_data['username'];
 
       header("Location: ./admin/index.php");
-      exit(); // Always exit after header to prevent further code execution
+      exit(); 
     } else {
-        // If admin login fails, check in the user_data table
         $user_query = "SELECT * FROM `user_data` WHERE (`username` = '$username' OR  `email` = '$username') AND `password` = '$password'";
         $result = mysqli_query($conn, $user_query);
 
         if (!$result) {
-            // Display SQL error if the query fails
             echo "SQL Error: " . mysqli_error($conn);
             exit();
         }
@@ -42,8 +43,8 @@ if (isset($_POST['login'])) {
             $_SESSION['username'] = $user_data['username'];
             header("Location:index.php");
         } else {
-            // Invalid credentials for both admin and user
-            echo "Invalid login credentials!";
+            echo "<script>alert('User Not Found....!');window.location.href = 'login.php';</script>";
+            exit();
         }
     }
 }
@@ -55,16 +56,12 @@ if (isset($_POST['signup'])) {
 
   // Insert query with corrected closing quote
   if($username != NULL && $password != NULL && $email != NULL){
-  $query_user = "INSERT INTO `user_data`(`username`, `password`, `email`) VALUES ('$username', '$password', '$email')";
+    $query_user = "INSERT INTO `user_data`(`username`, `password`, `email`) VALUES ('$username', '$password', '$email')";
   }
-  else{
-    echo "Enter Details...!";
-  }
-  // Execute query
+  
   $signin = mysqli_query($conn, $query_user);
 
   if (!$signin) {
-      // Output SQL error if insertion fails
       echo "Not Registered: " . mysqli_error($conn);
   } else {
     header("Location:login.php");
@@ -327,12 +324,72 @@ if (isset($_POST['signup'])) {
         </div>
       </div>
     </div>
+    <script src="assets/js/login.js"></script>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+    <script>
+      // Validate Login Form
+function validateLogin() {
+  const username = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+  if (username === "" || password === "") {
+    alert("All fields must be filled.");
+    return false;
+  }
+
+  if (username.includes(" ")) {
+    alert("Username must not contain spaces.");
+    return false;
+  }
+
+  if (!validatePassword(password)) {
+    alert(
+      "Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character."
+    );
+    return false;
+  }
+
+  return true;
+}
+
+// Validate Registration Form
+function validateRegister() {
+  const username = document.getElementById("registerUsername").value.trim();
+  const email = document.getElementById("registerEmail").value.trim();
+  const password = document.getElementById("registerPassword").value.trim();
+
+  if (username === "" || email === "" || password === "") {
+    alert("All fields must be filled.");
+    return false;
+  }
+
+  if (username.includes(" ")) {
+    alert("Username must not contain spaces.");
+    return false;
+  }
+
+  if (!validatePassword(password)) {
+    alert(
+      "Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character."
+    );
+    return false;
+  }
+
+  return true;
+}
+
+console.log(validatePassword("Vivek_2705"));   // Should return true
+
+// Password Validation Function
+function validatePassword(password) {
+  password = password.trim();
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
+  return regex.test(password);
+}
+
+    </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/login.js"></script>
   </body>
 </html>

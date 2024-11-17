@@ -76,6 +76,11 @@ if ($sub_category_id !== null) {
             .nav button:hover:after {
             width: 100%;
         }
+        #main-img{
+            width: 500px;
+            height: 500px;
+            object-fit: contain;
+        }
 
     </style>
     <!-- Additional CSS Files -->

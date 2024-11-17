@@ -285,5 +285,21 @@ function sendOTPEmail($email, $otp) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+      function validateForm(){
+      const new_password = document.getElementById("new_password").value.trim();
+      const confirm_password = document.getElementById("confirm_password").value.trim();
+       if (!validatePassword(new_password)) {
+          alert("Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
+          return false;
+        }
+      } 
+function validatePassword(password) {
+  password = password.trim();
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
+  return regex.test(password);
+}
+
+    </script>
 </body>
 </html>

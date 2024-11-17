@@ -172,6 +172,7 @@ mysqli_close($conn);
             </div>
         </div>
     </header>
+    <div class="container mt-5 d-flex justify-content-center"></div>                            
     <?php if (isset($customer_status) && $customer_status === 'existing'): ?>
     <div class="container mt-5 d-flex justify-content-center">
        <div class="card p-4 mt-3">

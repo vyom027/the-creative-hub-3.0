@@ -2,10 +2,18 @@
    require_once 'db_connection.php';
    include_once './php/cart.php';
     $category_id = 3;
-    $sub_category_id = 1;
-    $sub_category = "SELECT * FROM sub_category where category_id = $category_id";
-    $sub_category_result = mysqli_query($conn, $sub_category);
+    $sub_category_query = "SELECT * FROM sub_category WHERE category_id = $category_id";
+    $sub_category_result = mysqli_query($conn, $sub_category_query);
 
+   // Set subcategory ID to the first result by default, or to the selected one
+    $sub_category_id = $_POST['sub_category_id'] ?? mysqli_fetch_assoc($sub_category_result)['sub_category_id'];
+   
+   // Rewind to the start of the result for looping over buttons
+    mysqli_data_seek($sub_category_result, 0);
+
+   // Query products based on selected or default subcategory ID
+    $sql_product = "SELECT * FROM product WHERE sub_category_id = $sub_category_id AND category_id = $category_id";
+    $all_product = $conn->query($sql_product);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
       rel="stylesheet"
     />
-    <title> Mobile & Computing Devices | The Creative Hub</title>
+    <title> Entertaiment Devices | The Creative Hub</title>
 
     <style>
         .nav button {
