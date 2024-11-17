@@ -169,7 +169,14 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                                 <div class="col-md-3 col-lg-2 col-xl-2 text-end">
                                                 <form method="POST">
                                                 <input type="hidden" name="cart_id" value="<?php echo $cart_item['cart_id']; ?>">
-                                                <button type="submit" class="text-muted" name="delete_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Delete</button>    
+                                                <form method="POST">
+                                                    <input type="hidden" name="cart_id" value="<?php echo $cart_item['cart_id']; ?>">
+                                                    <input type="hidden" name="product_id" value="<?php echo $cart_item['product_id']; ?>"> <!-- Example value -->
+                                                    <input type="hidden" name="product_price" value="<?php echo $cart_item['price']; ?>"> <!-- Example value -->
+                                                    <input type="hidden" name="main_image" value="<?php echo $cart_item['main_image']; ?>">
+                                                    <button type="submit" class="text-muted" name="delete_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Delete</button>
+                                                    <button type="submit" class="text-muted" name="buy_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Buy</button>    
+                                                </form>    
                                                 </div>
                                             </div>
                                             <hr class="my-4">
@@ -309,7 +316,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                     <form method="post" >
                     <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                     <input type="hidden" name="product_price" value="<?php echo $product['price']; ?>">
-                    <!-- <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>"> -->
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
                     <input type="hidden" name="main_image" value="<?php echo $product['image_url']; ?>">  <!-- Main Image -->
                     <button type="submit" class="btn btn-primary btn-custom me-2" name="add_to_cart">Add to Cart</button>
                     <button type="submit" class="btn btn-success btn-custom" name="buy_now">Buy Now</button></form>
@@ -364,7 +371,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                 <div class="col-lg-4">
                     <div class="item">
                         <div class="thumb">
-                        <a href="product.php?product_id=<?php echo $row['product_id']; ?>&category_id=<?php echo $category_id; ?>&sub_category_id=<?php echo $sub_category_id; ?>">
+                        <a href="product.php?product_id=<?php echo urlencode($row['product_id']); ?>&category_id=<?php echo urlencode($category_id); ?>&sub_category_id=<?php echo urlencode($sub_category_id); ?>">
                             <img src="./admin/<?php echo $row['image_url']; ?>" alt="" class="custom-image-size">
                         </div>
                         <div class="down-content">
@@ -377,7 +384,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                 <li><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
                             </ul>
-                        </div>
+                        </div></a>
                     </div>
                 </div>
                 <?php

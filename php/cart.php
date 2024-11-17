@@ -28,8 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Execute the query
             if (mysqli_query($conn, $cart)) {
+                 $query_string = $_SERVER['QUERY_STRING'];
                 // Successfully added to cart, redirect to the cart page or any success page
-                header("Location: mobile-computer.php");
+                header("Location: product.php?$query_string");
                 exit();
             } else {
                 echo "Error: " . mysqli_error($conn);
@@ -47,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $product_id = $_POST['product_id'];
             $product_price = $_POST['product_price'];
             $main_image = $_POST['main_image'];
-          // Get the main image from the form
+              // Get the main image from the form
 
             // Insert the product into the shopping_cart table
             $cart = "INSERT INTO shopping_cart (user_id, product_id, price, main_image) VALUES ('$user_id', '$product_id', '$product_price', '$main_image')";
@@ -103,7 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if (mysqli_query($conn, $clear_cart_query)) {
                     // Success message or redirect after clearing the cart
-                    header("Location: mobile-computer.php");
+                    header("Location: " . $_SERVER['PHP_SELF']);
+                    exit();
                 } else {
                     echo '<p>Error clearing the cart: ' . mysqli_error($conn) . '</p>';
                 }
@@ -122,14 +124,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $delete_query = "DELETE FROM shopping_cart WHERE cart_id = '$cart_id' AND user_id = '$user_id'";
         
                 if (mysqli_query($conn, $delete_query)) {
-                    header("Location: mobile-computer.php");
+                    // Redirect back to the same page with query parameters preserved
+                    $current_page = $_SERVER['PHP_SELF']; // e.g., /mobile.php
+                    $query_string = $_SERVER['QUERY_STRING']; // e.g., product_id=99&category_id=4
+                    header("Location: " . $current_page . ($query_string ? '?' . $query_string : ''));
                     exit();
-                } 
+                }
             } 
             else{
                 header("Location: login.php");
             }
         }
+        if (isset($_POST['buy_one'])) {
+    // Check if the user is logged in
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id']; // Sanitize user ID
+        $cart_id = $_POST['cart_id']; // Sanitize cart item ID
+        $product_id = $_POST['product_id']; // Sanitize product ID
+        $product_price =  $_POST['product_price']; // Sanitize product price
+        $main_image = $_POST['main_image']; // Sanitize image path
+
+        // Query to insert product into the order_product table
+        $order_insert_query = "INSERT INTO order_product (user_id, product_id, price, main_image) 
+                               VALUES ('$user_id', '$product_id', '$product_price', '$main_image')";
+
+        // Execute the order insertion query
+        if (mysqli_query($conn, $order_insert_query)) {
+            // Query to delete the specific product from the shopping cart
+            $delete_query = "DELETE FROM shopping_cart WHERE cart_id = '$cart_id' AND user_id = '$user_id'";
+
+            // Execute the deletion query
+            if (mysqli_query($conn, $delete_query)) {
+                $current_page = $_SERVER['PHP_SELF']; // e.g., /mobile.php
+                $query_string = $_SERVER['QUERY_STRING']; // e.g., product_id=99&category_id=4
+                header("Location: " . $current_page . ($query_string ? '?' . $query_string : ''));
+                exit();
+            } else {
+                // Handle deletion error
+                echo "Error deleting product from cart: " . mysqli_error($conn);
+            }
+        } else {
+            // Handle insertion error
+            echo "Error adding product to order: " . mysqli_error($conn);
+        }
+    } else {
+        header("Location: login.php"); // Redirect to login if not logged in
+        exit();
+    }
+}
+
         if (isset($_POST['confirm_order'])) {
             // Check if the user is logged in
             if (isset($_SESSION['user_id'])) {

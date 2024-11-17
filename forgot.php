@@ -28,7 +28,8 @@ if(isset($_POST['email_submit'])) {
 
         if (mysqli_num_rows($result) > 0) {
             $_SESSION['email'] = $email;
-            // Email exists, proceed (e.g., redirect to OTP page)
+            $_SESSION['is_customer'] = true; // Add this
+            $_SESSION['is_admin'] = false;  // Add this
             $otp = generateOTP();
             if (sendOTPEmail($email, $otp)) {
                 $_SESSION['otp'] = $otp; // Store OTP in session for later verification
@@ -50,7 +51,8 @@ if(isset($_POST['email_submit'])) {
 
             if (mysqli_num_rows($result) > 0) {
                 $_SESSION['email'] = $email;
-                // Email exists, proceed (e.g., redirect to OTP page)
+                $_SESSION['is_customer'] = false; // Add this
+                $_SESSION['is_admin'] = true;    // Add this
                 $otp = generateOTP();
                 if (sendOTPEmail($email, $otp)) {
                     $_SESSION['otp'] = $otp; // Store OTP in session for later verification
@@ -92,32 +94,35 @@ if(isset($_POST['reset_password_submit'])) {
     
     if($new_password == $confirm_password) {
         // Update password in database (ensure you hash the password for security)
-        if($customer == true){
+        if($_SESSION['is_customer']){
           $email = $_SESSION['email'];
           echo "<script>alert('$email');</script>";
           $update_pass = "UPDATE user_data SET password = '$new_password' WHERE email = '$email'";
           if(mysqli_query($conn, $update_pass)) {
+            session_destroy(); // Destroy session after successful reset
               header("Location:login.php");
-              session_destroy(); // Destroy session after successful reset
+              exit();
           } else {
               $error_message = "Failed to update password. Please try again.";
               $show_error = true;
           }
         }
         
-        if($admin == true){
+        if($_SESSION['is_admin']){
           $email = $_SESSION['email'];
           echo "<script>alert('$email');</script>";
           $update_pass = "UPDATE admin SET password = '$new_password' WHERE email = '$email'";
           if(mysqli_query($conn, $update_pass)) {
+            session_destroy(); // Destroy session after successful reset
               header("Location:login.php");
-              session_destroy(); // Destroy session after successful reset
+              exit();
           } else {
               $error_message = "Failed to update password. Please try again.";
               $show_error = true;
           }
         }
-    } else {
+    } 
+    else {
         $error_message = "Passwords do not match.";
         $show_error = true;
     }

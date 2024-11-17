@@ -8,13 +8,13 @@ function Imgchange(Id) {
   return false;
 }
 function cart() {
-  // Hide the product section
   document.getElementById("pro-con").style.display = "none";
-  // Show the cart section
   document.getElementById("cart-con").style.display = "block";
+  document.body.classList.add("no-scroll");
 }
 
 function closeCart() {
-  // Hide the cart section
   document.getElementById("cart-con").style.display = "none";
+  document.getElementById("pro-con").style.display = "block";
+  document.body.classList.remove("no-scroll");
 }

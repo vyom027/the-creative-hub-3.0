@@ -19,12 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['order_id'])) {
   if ($result && mysqli_num_rows($result) > 0) {
       $order_data = mysqli_fetch_assoc($result);
 
-      // Insert into confirm_orders
       $insert_query = "INSERT INTO confirm_orders (user_id, product_id, price, order_date,main_image) 
                       VALUES ('" . $order_data['user_id'] . "', '" . $order_data['product_id'] . "', '" . $order_data['price'] . "', NOW(), '" . $order_data['main_image'] . "')";
 
       if (mysqli_query($conn, $insert_query)) {
-          // Now delete from pending_orders
           $delete_query = "DELETE FROM pending_orders WHERE order_id = '$order_id'";
           mysqli_query($conn, $delete_query);
 

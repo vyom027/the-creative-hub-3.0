@@ -30,7 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
       rel="stylesheet"
     />
-    <title> Mobile & Computing Devices | The Creative Hub</title>
+    <title> Accessories | The Creative Hub</title>
 
     <style>
         .nav button {
@@ -151,7 +151,14 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                                 <div class="col-md-3 col-lg-2 col-xl-2 text-end">
                                                 <form method="POST">
                                                 <input type="hidden" name="cart_id" value="<?php echo $cart_item['cart_id']; ?>">
-                                                <button type="submit" class="text-muted" name="delete_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Delete</button>    
+                                                <form method="POST">
+                                                    <input type="hidden" name="cart_id" value="<?php echo $cart_item['cart_id']; ?>">
+                                                    <input type="hidden" name="product_id" value="<?php echo $cart_item['product_id']; ?>"> <!-- Example value -->
+                                                    <input type="hidden" name="product_price" value="<?php echo $cart_item['price']; ?>"> <!-- Example value -->
+                                                    <input type="hidden" name="main_image" value="<?php echo $cart_item['main_image']; ?>">
+                                                    <button type="submit" class="text-muted" name="delete_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Delete</button>
+                                                    <button type="submit" class="text-muted" name="buy_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Buy</button>    
+                                                </form>    
                                                 </div>
                                             </div>
                                             <hr class="my-4">
@@ -299,7 +306,7 @@ $result_cart = mysqli_query($conn, $sql_cart);
                     <div class="item">
                         <div class="thumb">
                             <!-- <a href="product.php?product_id=<?php echo $row['product_id']; ?> -->
-                            <a href="product.php?product_id=<?php echo $row['product_id']; ?>&category_id=<?php echo $category_id; ?>&sub_category_id=<?php echo $sub_category_id; ?>">
+                            <a href="product.php?product_id=<?php echo urlencode($row['product_id']); ?>&category_id=<?php echo urlencode($category_id); ?>&sub_category_id=<?php echo urlencode($sub_category_id); ?>">
                             <img src="./admin/<?php echo $row['image_url']; ?>" alt="" class="custom-image-size">
 
                         </div>

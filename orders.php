@@ -144,7 +144,14 @@ $result_cart = mysqli_query($conn, $sql_cart);
                                                     <h6 class="mb-0">₹<?php echo $cart_item['price']; ?></h6>
                                                 </div>
                                                 <div class="col-md-3 col-lg-2 col-xl-2 text-end">
-                                                <button type="submit" class="text-muted" name="delete_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Delete</button>    
+                                                <form method="POST">
+                                                    <input type="hidden" name="cart_id" value="<?php echo $cart_item['cart_id']; ?>">
+                                                    <input type="hidden" name="product_id" value="<?php echo $cart_item['product_id']; ?>"> <!-- Example value -->
+                                                    <input type="hidden" name="product_price" value="<?php echo $cart_item['price']; ?>"> <!-- Example value -->
+                                                    <input type="hidden" name="main_image" value="<?php echo $cart_item['main_image']; ?>">
+                                                    <button type="submit" class="text-muted" name="delete_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Delete</button>
+                                                    <button type="submit" class="text-muted" name="buy_one" style="background:none; border:none; color:#007bff; text-decoration:none; cursor:pointer;">Buy</button>    
+                                                </form>    
 
                                                 </div>
                                             </div>

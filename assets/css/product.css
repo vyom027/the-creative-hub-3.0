@@ -1,6 +1,6 @@
 html.no-scroll,
 body.no-scroll {
-  overflow: hidden; /* Prevent scrolling on the entire screen */
+  overflow: hidden !important; /* Prevent scrolling on the entire screen */
 }
 
 body {
@@ -149,7 +149,7 @@ body {
 
 .cart-con {
   background-color: white;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 100px;
   padding: 20px;
